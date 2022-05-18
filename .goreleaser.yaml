@@ -26,3 +26,12 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+nfpms:
+  - maintainer: Jairinho <t4ngz3r0@gmail.com>
+    description: simple password recovery tool
+    homepage: https://github.com/tangzero/joao
+    license: MIT
+    formats:
+      - deb
+      - rpm
+      - apk
