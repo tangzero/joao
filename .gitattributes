@@ -1,0 +1,2 @@
+commands/rockyou.txt filter=lfs diff=lfs merge=lfs -text
+commands/rockyou.zip filter=lfs diff=lfs merge=lfs -text
