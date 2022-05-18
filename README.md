@@ -44,7 +44,7 @@ f9fe0661e262cc5f27211e82e286e61d30540709 [SHA1] = cuchito
 
 ### Toggle Case Attack
 
-the Toggle Case Attack can be used to decrypt/recovery/crack some dificult hashes.
+the Toggle Case Attack can be used to decrypt/recovery/crack some difficult hashes.
 The `toggle` is used to specifiy how many letters from the beggining of the word should be toggled.
 
 ```sh
