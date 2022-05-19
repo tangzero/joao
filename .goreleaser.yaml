@@ -1,7 +1,7 @@
 before:
   hooks:
     - go mod tidy
-    - unzip commands/rockyou.zip -d commands
+    - go generate ./...
 builds:
   - env:
       - CGO_ENABLED=0

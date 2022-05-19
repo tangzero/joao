@@ -1,3 +1,4 @@
+//go:generate unzip rockyou.zip
 package commands
 
 import (

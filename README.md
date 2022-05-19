@@ -60,6 +60,25 @@ joao decrypt --toggle 2 file.txt
 and this one will try `banana`, `Banana`, `bAnana` and `BAnana` .
 
 
+### Development
 
- 
+To run the code, we first need to unzip the `rockyou.zip` wordlist. 
+
+Just run:
+
+```sh
+go generate ./...
+````
+
+or 
+
+```sh
+unzip commands/rockyout.zip -d commands
+```
+
+then
+
+```sh
+go run main.go
+``` 
   
