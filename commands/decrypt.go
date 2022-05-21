@@ -1,7 +1,7 @@
-//go:generate unzip rockyou.zip
 package commands
 
 import (
+	"archive/zip"
 	"bufio"
 	"bytes"
 	"crypto/md5"
@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	_ "embed"
 	"fmt"
+	"io"
 	"strings"
 
 	"github.com/tangzero/joao/input"
@@ -24,6 +25,8 @@ var Decrypt = &cli.Command{
 		&cli.Int64Flag{Name: "toggle", Aliases: []string{"t"}, Usage: "toggle letter cases"},
 	},
 	Action: func(c *cli.Context) error {
+		toggle := c.Value("toggle").(int64)
+
 		input, err := input.GetInput(c)
 		if err != nil {
 			return err
@@ -34,28 +37,31 @@ var Decrypt = &cli.Command{
 		scanner := bufio.NewScanner(input)
 		scanner.Split(bufio.ScanLines)
 
+		zipreader, err := zip.NewReader(bytes.NewReader(rockyou), int64(len(rockyou)))
+		if err != nil {
+			return err
+		}
+
 		for scanner.Scan() {
 			hash := scanner.Bytes()
 			alg := identify(hash)
-
-			tryToDecrypt(c, hash, alg)
+			wordlist, _ := zipreader.Open("rockyou.txt")
+			tryToDecrypt(toggle, wordlist, hash, alg)
 		}
 		return nil
 	},
 }
 
-//go:embed rockyou.txt
-var rockyou string
+//go:embed rockyou.zip
+var rockyou []byte
 
-func tryToDecrypt(c *cli.Context, hash []byte, alg string) {
+func tryToDecrypt(toggle int64, wordlist io.Reader, hash []byte, alg string) {
 	algorithm, ok := algorithms[alg]
 	if !ok {
 		return
 	}
 
-	toggle := c.Value("toggle").(int64)
-
-	scanner := bufio.NewScanner(bytes.NewBufferString(rockyou))
+	scanner := bufio.NewScanner(wordlist)
 	scanner.Split(bufio.ScanLines)
 
 	var found = false
