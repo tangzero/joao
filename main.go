@@ -8,6 +8,11 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+var (
+	version = "dev"
+	date    = "unknown"
+)
+
 func main() {
 	app := &cli.App{
 		Name:  "joao",
@@ -15,11 +20,11 @@ func main() {
 		Commands: []*cli.Command{
 			commands.Identify,
 			commands.Decrypt,
+			commands.Version(version),
 		},
 	}
 
-	err := app.Run(os.Args)
-	if err != nil {
+	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
 }
